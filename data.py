@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from numpy.core.umath_tests import inner1d
 
-data_train = pd.read_csv("data/train.csv")
+data_train = pd.read_csv("data/train.csv", encoding='utf-8')
 
 data_train['Cabin'] = data_train['Cabin'].fillna('U')
 
