@@ -97,13 +97,13 @@ def tfidf_con_vec():
 
 if __name__ == "__main__":
 
-    # dict_vec()
-
-    # con_vec()
-
-    # cut_word()
-
-    # han_con_vec
-
-    tfidf_con_vec()
+    dict_vec()
+    #
+    # # con_vec()
+    #
+    # # cut_word()
+    #
+    # # han_con_vec
+    #
+    # tfidf_con_vec()
 
