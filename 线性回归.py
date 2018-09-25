@@ -62,3 +62,4 @@ y_predict = sgd.predict(x_test)
 y_predict = std_y.inverse_transform(y_predict)
 
 print("预测价格", y_predict)
+

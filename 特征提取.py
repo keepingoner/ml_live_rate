@@ -33,47 +33,33 @@ def con_vec():
 
     data = ab_dic.fit_transform(a)
 
-    # 特征值的抽取
     print(ab_dic.get_feature_names())
 
-    # 使用toarray方法
     print(data.toarray())
-
-
-def cut_word():
-
-    con1 = jieba.cut("我喜欢中国，我爱中国")
-    con2 = jieba.cut("我喜欢python，我爱python")
-
-    print(con1, con2)
-
-    content1 = list(con1)
-    content2 = list(con2)
-
-    print(content1, content2)
-
-    c1 = " ".join(content1)
-    c2 = " ".join(content2)
-    return c1, c2
 
 
 def han_con_vec():
     """
-    汉字提取
+    使用结巴进行汉字分词
     :return:
     """
 
-    c1, c2 = cut_word()
+    con1 = jieba.cut("我喜欢中国，我爱中国")
+    con2 = jieba.cut("我喜欢python，我爱python")
+
+    content1 = list(con1)
+    content2 = list(con2)
+
+    c1 = " ".join(content1)
+    c2 = " ".join(content2)
 
     ab_dic = CountVectorizer()
 
     data = ab_dic.fit_transform([c1, c2])
 
-    # 特征值的抽取
-    # print(ab_dic.get_feature_names())
+    print(ab_dic.get_feature_names())
 
-    # 使用toarray方法
-    # print(data.toarray())
+    print(data.toarray())
 
 
 def tfidf_con_vec():
@@ -97,13 +83,10 @@ def tfidf_con_vec():
 
 if __name__ == "__main__":
 
-    dict_vec()
-    #
-    # # con_vec()
-    #
-    # # cut_word()
-    #
-    # # han_con_vec
-    #
+    # dict_vec()
+    # con_vec()
+
+    han_con_vec
+
     # tfidf_con_vec()
 
