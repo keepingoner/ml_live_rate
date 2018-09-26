@@ -7,13 +7,15 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
-
+from sklearn.preprocessing import OneHotEncoder
 # 导入数据
 data_train = pd.read_csv("data/train.csv")
 # print(data_train.columns)
 # print(data_train.info())
 # print(data_train.describe())
 
+
+# 画图分析
 def map_plt():
     """
     画图分析数据
@@ -68,21 +70,27 @@ def map2_plt():
     plt.title(u"各乘客等级的获救情况")
     plt.xlabel(u"乘客等级")
     plt.ylabel(u"人数")
+    plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
+    plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 
     plt.show()
 
 
-def set_missing_ages(df):
-    # 把已有的数值型特征取出来丢进Random Forest Regressor中
-    age_df = df[['Age', 'Fare', 'Parch', 'SibSp', 'Pclass']]
-
+# 缺失值处理
+def set_miss():
+    """
+    缺失值处理
+    :return:
+    """
+    # 使用随机森林处理年龄
+    age_df = data_train[['Age', 'Fare', 'Parch', 'SibSp', 'Pclass']]
+    # print(age_df)
     # 乘客分成已知年龄和未知年龄两部分
-    known_age = age_df[age_df.Age.notnull()].as_matrix()
-    unknown_age = age_df[age_df.Age.isnull()].as_matrix()
-
-    # y即目标年龄
+    known_age = age_df[age_df.Age.notnull()].values
+    unknown_age = age_df[age_df.Age.isnull()].values
+    # print(known_age)
+    # print(unknown_age)
     y = known_age[:, 0]
-
     # X即特征属性值
     X = known_age[:, 1:]
 
@@ -92,13 +100,32 @@ def set_missing_ages(df):
 
     # 用得到的模型进行未知年龄结果预测
     predictedAges = rfr.predict(unknown_age[:, 1::])
+    # print(predictedAges)
 
     # 用得到的预测结果填补原缺失数据
-    df.loc[(df.Age.isnull()), 'Age'] = predictedAges
+    data_train.loc[(data_train.Age.isnull()), 'Age'] = predictedAges
+    # print(data_train)
+    # print(data_train.columns)
+    # print(data_train.info())
+    # print(data_train.describe())
 
-    return df, rfr
+    # 船舱缺失处理
+    data_train.loc[(data_train.Cabin.notnull()), 'Cabin'] = "Yes"
+    data_train.loc[(data_train.Cabin.isnull()), 'Cabin'] = "No"
+
+              
+    # one_hot = [[1],[0]]
+    # dict_vec = OneHotEncoder()
+    # dict_vec.fit(one_hot)
+    # X = dict_vec.transform(data_train)
+    # print(X)
+
+
+
 
 if __name__ == "__main__":
     # map_plt()
-    map2_plt()
+    # map2_plt()
+    set_miss()
+    pass
 
