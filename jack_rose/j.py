@@ -113,7 +113,7 @@ def set_miss():
     data_train.loc[(data_train.Cabin.notnull()), 'Cabin'] = "Yes"
     data_train.loc[(data_train.Cabin.isnull()), 'Cabin'] = "No"
 
-              
+
     # one_hot = [[1],[0]]
     # dict_vec = OneHotEncoder()
     # dict_vec.fit(one_hot)
